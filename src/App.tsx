@@ -3,8 +3,8 @@ import logo from "./logo.svg";
 import "./App.css";
 import { useRecoilState } from "recoil";
 import { currentViewState } from "./stores/store";
-import MonthlyCalender from "./components/pages/MonthlyCalender";
-import WeeklyCalaender from "./components/pages/WeeklyCalender";
+import MonthlyCalenderPage from "./components/pages/MonthlyCalenderPage";
+import WeeklyCalaenderPage from "./components/pages/WeeklyCalenderPage";
 
 function App() {
   const [currentView, setCurrentView] = useRecoilState(currentViewState);
@@ -12,8 +12,16 @@ function App() {
 
   return (
     <div className="App">
-      {currentView === "monthly" ? <MonthlyCalender></MonthlyCalender> : ""}
-      {currentView === "weekly" ? <WeeklyCalaender></WeeklyCalaender> : ""}
+      {currentView === "monthly" ? (
+        <MonthlyCalenderPage></MonthlyCalenderPage>
+      ) : (
+        ""
+      )}
+      {currentView === "weekly" ? (
+        <WeeklyCalaenderPage></WeeklyCalaenderPage>
+      ) : (
+        ""
+      )}
     </div>
   );
 }
