@@ -1,14 +1,12 @@
-import ViewToggleButton from "../atoms/ViewToggleButton"
+import ViewToggleButton from "../atoms/ViewToggleButton";
 
-const MonthlyCalender = () => {  
-    return (
-      <>
-        <div>
-            MonthlyCalender
-        </div>
-        <ViewToggleButton/>
-      </>
-    );
-  };
-  
-  export default MonthlyCalender;
+const MonthlyCalender = () => {
+  return (
+    <>
+      <div>MonthlyCalender</div>
+      <ViewToggleButton />
+    </>
+  );
+};
+
+export default MonthlyCalender;
