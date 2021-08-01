@@ -2,33 +2,53 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import {
   calenderValue,
   currentViewState,
+  Schedule,
+  scheduleInputState,
+  toggleScheduleInputState,
   ViewStateType,
 } from "../../stores/store";
 import { v4 } from "uuid";
-
-const DayCalneder = (props: { day: Date }) => {
-  return (
-    <td>
-      {props.day.getMonth() + 1}/{props.day.getDate()}
-    </td>
-  );
-};
-
-const WeekCalender = (week: Date[]) => {
-  return (
-    <tr key={v4()}>
-      {week.map((day: Date) => {
-        return <DayCalneder key={v4()} day={day} />;
-      })}
-    </tr>
-  );
-};
+import styled from "styled-components";
+import { formatDate } from "../../services/utils";
 
 const MonthlyCalender = () => {
   const [currentView, setCurrentView] = useRecoilState(currentViewState);
+  const [scheduleInput, setScheduleInput] = useRecoilState(scheduleInputState);
+  const [toggleScheduleInput, setToggleScheduleInput] = useRecoilState(
+    toggleScheduleInputState
+  );
+
   const calender = useRecoilValue(calenderValue);
   const toggleView = (viewValue: ViewStateType) => {
     setCurrentView(viewValue);
+  };
+
+  const updateToggleSchedule = (inputDate: Date) => {
+    const newSchedule: Schedule = { startDate: formatDate(inputDate) };
+    setToggleScheduleInput(true);
+    setScheduleInput(newSchedule);
+  };
+
+  const DayTd = styled.td`
+    height: 5rem;
+  `;
+
+  const DayCalneder = (props: { day: Date }) => {
+    return (
+      <DayTd onClick={() => updateToggleSchedule(props.day)}>
+        {props.day.getMonth() + 1}/{props.day.getDate()}
+      </DayTd>
+    );
+  };
+
+  const WeekCalender = (week: Date[]) => {
+    return (
+      <tr key={v4()}>
+        {week.map((day: Date) => {
+          return <DayCalneder key={v4()} day={day} />;
+        })}
+      </tr>
+    );
   };
 
   const viewCalender = Array.from(
@@ -41,7 +61,6 @@ const MonthlyCalender = () => {
 
   return (
     <>
-      MonthlCalender
       <table>
         <thead>
           <tr>
