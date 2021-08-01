@@ -15,12 +15,55 @@ export const currentDateState = atom({
 export const calenderValue = selector({
   key: "calenderValue",
   get: ({ get }) => {
+    const calender: Date[] = [];
     const viewState = get(currentViewState);
     const currentDate = get(currentDateState);
+    let firstDay, lastDay;
     if (viewState == "monthly") {
-      return ["1", "2"];
+      // 지난 달의 마지막주 부터
+      // 다음 달의 첫째주 까지 총 6주를 generate
+      firstDay = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
+      lastDay = new Date(
+        currentDate.getFullYear(),
+        currentDate.getMonth() + 1,
+        0
+      );
+      const lastMonth = [];
+      let count = 0;
+      const itDate = firstDay;
+      while (count < 1) {
+        if (itDate.getDay() == 0) {
+          count++;
+          break;
+        }
+        itDate.setDate(itDate.getDate() - 1);
+        console.log(itDate, count);
+      }
+      count = 0;
+      lastDay.setDate(lastDay.getDate() + 1);
+      while (count < 2) {
+        if (lastDay.getDay() == 6) {
+          count++;
+          if (count == 2) break;
+        }
+        lastDay.setDate(lastDay.getDate() + 1);
+        console.log(lastDay, count);
+      }
     } else {
-      return ["3", "4"];
+      // currentDate가 속한 이번 주
+      firstDay = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
+      lastDay = new Date(
+        currentDate.getFullYear(),
+        currentDate.getMonth() + 1,
+        0
+      );
+      console.log(firstDay, lastDay);
     }
+    const itDate = new Date(firstDay);
+    while (itDate <= lastDay) {
+      calender.push(new Date(itDate));
+      itDate.setDate(itDate.getDate() + 1);
+    }
+    return calender;
   },
 });
