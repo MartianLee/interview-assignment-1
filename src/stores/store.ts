@@ -1,6 +1,15 @@
 import { atom, selector } from "recoil";
 
 export type ViewStateType = "monthly" | "weekly";
+export interface Schedule {
+  id?: string;
+  color?: string;
+  title?: string;
+  startDate: string;
+  startTime?: number;
+  endDate?: string;
+  endTime?: number;
+}
 
 export const currentViewState = atom({
   key: "currentView",
@@ -10,6 +19,21 @@ export const currentViewState = atom({
 export const currentDateState = atom({
   key: "currentDate",
   default: new Date(),
+});
+
+export const toggleScheduleInputState = atom({
+  key: "toggleScheduleInput",
+  default: false,
+});
+
+export const scheduleInputState = atom({
+  key: "scheduleInput",
+  default: {} as Schedule,
+});
+
+export const scheduleListState = atom({
+  key: "scheduleList",
+  default: [] as Schedule[],
 });
 
 export const calenderValue = selector({
