@@ -1,4 +1,4 @@
-export function formatDate(date: Date) {
+export function formatDate(date: Date): string {
   const d = new Date(date);
   let month = "" + (d.getMonth() + 1);
   let day = "" + d.getDate();
@@ -10,7 +10,7 @@ export function formatDate(date: Date) {
   return `${year}-${month}-${day}`;
 }
 
-export const timeOptions = () => {
+export const timeOptions = (): any[] => {
   const value = [...Array(48).keys()];
   return value.map((item) => {
     const iter = item + 1;
@@ -29,3 +29,12 @@ export const timeOptions = () => {
     };
   });
 };
+
+export function getRandomColor(): string {
+  const letters = "0123456789ABCDEF";
+  let color = "#";
+  for (let i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+  return color;
+}

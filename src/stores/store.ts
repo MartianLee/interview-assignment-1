@@ -7,7 +7,7 @@ export interface Schedule {
   title?: string;
   startDate: string;
   startTime?: number;
-  endDate?: string;
+  endDate: string;
   endTime?: number;
 }
 

@@ -10,6 +10,7 @@ import {
 import { v4 } from "uuid";
 import styled from "styled-components";
 import { formatDate } from "../../services/utils";
+import DayCalneder from "../atoms/DayCalender";
 
 const MonthlyCalender = () => {
   const [currentView, setCurrentView] = useRecoilState(currentViewState);
@@ -24,21 +25,12 @@ const MonthlyCalender = () => {
   };
 
   const updateToggleSchedule = (inputDate: Date) => {
-    const newSchedule: Schedule = { startDate: formatDate(inputDate) };
+    const newSchedule: Schedule = {
+      startDate: formatDate(inputDate),
+      endDate: "",
+    };
     setToggleScheduleInput(true);
     setScheduleInput(newSchedule);
-  };
-
-  const DayTd = styled.td`
-    height: 5rem;
-  `;
-
-  const DayCalneder = (props: { day: Date }) => {
-    return (
-      <DayTd onClick={() => updateToggleSchedule(props.day)}>
-        {props.day.getMonth() + 1}/{props.day.getDate()}
-      </DayTd>
-    );
   };
 
   const WeekCalender = (week: Date[]) => {

@@ -10,7 +10,7 @@ import {
 import styled, { css } from "styled-components";
 import { useState } from "react";
 import { v4 } from "uuid";
-import { timeOptions } from "../../services/utils";
+import { getRandomColor, timeOptions } from "../../services/utils";
 
 const Button = styled.button`
   font-size: 2rem;
@@ -28,12 +28,14 @@ const InputScheduleModal = () => {
   const updateCurrentDate = () => {
     setScheduleInput({
       startDate: "",
+      endDate: "",
     });
   };
 
   const insertSchedule = () => {
     console.log(title, startDate, startTime, endDate, endTime);
     const newSchedule: Schedule = {
+      color: getRandomColor(),
       title,
       startDate,
       startTime,
