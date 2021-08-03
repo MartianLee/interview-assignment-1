@@ -10,6 +10,7 @@ import {
 import styled, { css } from "styled-components";
 import { useState } from "react";
 import { v4 } from "uuid";
+import { timeOptions } from "../../services/utils";
 
 const Button = styled.button`
   font-size: 2rem;
@@ -50,7 +51,13 @@ const InputScheduleModal = () => {
   //   handleChange(event) {
   //     this.setState({value: event.target.value});
   //   }
-
+  const OptionListComponent = timeOptions().map((item: any, index) => {
+    return (
+      <option key={`option-${index}`} value={item.value}>
+        {item.text}
+      </option>
+    );
+  });
   return (
     <>
       <div>
@@ -76,9 +83,7 @@ const InputScheduleModal = () => {
           id="startTime"
           onChange={(e) => setStartTime(parseInt(e.target.value))}
         >
-          <option value="0">AM 01:00</option>
-          <option value="1">AM 01:30</option>
-          <option value="2">AM 02:00</option>
+          {OptionListComponent}
         </select>
         <input
           name="endDate"
@@ -90,9 +95,7 @@ const InputScheduleModal = () => {
           id="endTime"
           onChange={(e) => setEndTime(parseInt(e.target.value))}
         >
-          <option value="0">AM 01:00</option>
-          <option value="1">AM 01:30</option>
-          <option value="2">AM 02:00</option>
+          {OptionListComponent}
         </select>
         <button>취소</button>
         <input onClick={() => insertSchedule()} type="submit" value="저장" />
