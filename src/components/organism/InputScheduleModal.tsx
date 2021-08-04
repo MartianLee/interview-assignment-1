@@ -73,7 +73,6 @@ const InputScheduleModal = () => {
   );
 
   useEffect(() => {
-    console.log(toggleScheduleInput, scheduleInput);
     if (toggleScheduleInput.isModify) {
       setTitle(scheduleInput.title);
       setStartDate(scheduleInput.startDate);
@@ -84,7 +83,6 @@ const InputScheduleModal = () => {
   }, []);
 
   const insertSchedule = () => {
-    console.log(title, startDate, startTime, endDate, endTime);
     if (!title) {
       alert("일정 제목을 입력해 주세요!");
       return;
@@ -126,8 +124,6 @@ const InputScheduleModal = () => {
       const currentIndex = scheduleList.findIndex(
         (el) => el.id === scheduleInput.id
       );
-      console.log(currentIndex);
-      console.log(scheduleList);
       setScheduleList([
         ...scheduleList.slice(0, currentIndex),
         ...scheduleList.slice(currentIndex + 1),

@@ -54,7 +54,6 @@ const MonthlyCalender = () => {
   ).map((week) => {
     return WeekCalender(week);
   });
-  console.log(viewCalender);
 
   return (
     <>

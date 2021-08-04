@@ -69,7 +69,6 @@ export const calenderValue = selector({
           break;
         }
         itDate.setDate(itDate.getDate() - 1);
-        console.log(itDate, count);
       }
       count = 0;
       lastDay.setDate(lastDay.getDate() + 1);
@@ -79,7 +78,6 @@ export const calenderValue = selector({
           if (count == 2) break;
         }
         lastDay.setDate(lastDay.getDate() + 1);
-        console.log(lastDay, count);
       }
     } else {
       // currentDate가 속한 이번 주
@@ -96,7 +94,6 @@ export const calenderValue = selector({
         )
       );
       lastDay.setHours(23, 59, 59);
-      console.log(firstDay, lastDay);
     }
     const itDate = new Date(firstDay);
     while (itDate <= lastDay) {

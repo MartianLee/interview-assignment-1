@@ -141,7 +141,6 @@ const WeeklyCalender = () => {
         (calender[0] <= new Date(schedule.endDate) &&
           new Date(schedule.startDate) <= calender[6])
       ) {
-        console.log(schedule);
         for (
           let iter = new Date(schedule.startDate);
           iter <= new Date(schedule.endDate);
@@ -182,7 +181,6 @@ const WeeklyCalender = () => {
     });
     return elementList;
   };
-  console.log(calender);
   const days = [
     "Sunday",
     "Monday",
@@ -193,7 +191,6 @@ const WeeklyCalender = () => {
     "Saturday",
   ];
   const headTd = calender.map((weekday) => {
-    console.log(weekday);
     return (
       <DayTd key={v4()} weekday={weekday.getDay()}>
         <div>{days[weekday.getDay()]}</div>

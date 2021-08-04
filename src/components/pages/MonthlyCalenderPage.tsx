@@ -5,7 +5,6 @@ import MonthlyCalender from "../organism/MonthlyCalender";
 
 const MonthlyCalenderPage = () => {
   const info = useRecoilValue(calenderValue);
-  console.log(info);
 
   return (
     <>
