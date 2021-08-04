@@ -1,5 +1,5 @@
 export interface TimeType {
-  value?: string;
+  value: string;
   text?: string;
   korean?: string;
 }
@@ -20,7 +20,7 @@ export const timeOptions = (): any[] => {
   const value = [...Array(48).keys()];
   return value.map((item) => {
     const iter = item;
-    const time = iter % 12 <= 1 ? 12 : Math.floor(iter / 2) % 12;
+    const time = iter % 24 <= 1 ? 12 : Math.floor(iter / 2) % 12;
     const minute = iter % 2 == 0 ? "00" : "30";
     return {
       value: iter,

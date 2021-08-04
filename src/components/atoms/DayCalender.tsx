@@ -28,6 +28,8 @@ const DayCalneder = (props: { day: Date }) => {
     const newSchedule: Schedule = {
       startDate: formatDate(inputDate),
       endDate: "",
+      startTime: 0,
+      endTime: 0,
     };
     setToggleScheduleInput(true);
     setScheduleInput(newSchedule);

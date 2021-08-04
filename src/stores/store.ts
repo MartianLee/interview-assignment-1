@@ -6,9 +6,9 @@ export interface Schedule {
   color?: string;
   title?: string;
   startDate: string;
-  startTime?: number;
+  startTime: number;
   endDate: string;
-  endTime?: number;
+  endTime: number;
 }
 
 export const currentViewState = atom({
