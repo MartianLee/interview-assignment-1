@@ -76,10 +76,14 @@ const InputScheduleModal = () => {
         날짜 입력입력
         {scheduleInput.startDate}
         {/* <input type="date" onChange={() => myFunction(event)}></input> */}
+        일정 제목을 입력하세요
+        <input type="text" onChange={(e) => setTitle(e.target.value)}></input>
+        시작 날짜
         <input
           type="date"
           onChange={(e) => setStartDate(e.target.value)}
         ></input>
+        시작 시간
         <select
           name="startTime"
           id="startTime"
@@ -87,11 +91,13 @@ const InputScheduleModal = () => {
         >
           {OptionListComponent}
         </select>
+        종료 날짜
         <input
           name="endDate"
           type="date"
           onChange={(e) => setEndDate(e.target.value)}
         ></input>
+        종료 시간
         <select
           name="endTime"
           id="endTime"

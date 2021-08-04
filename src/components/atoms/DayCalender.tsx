@@ -55,7 +55,7 @@ const DayCalneder = (props: { day: Date }) => {
         key={`${props.day.toLocaleString}-${index}`}
         color={item.color}
       >
-        OOO
+        {item.title}
       </DaySchedule>
     );
   });
