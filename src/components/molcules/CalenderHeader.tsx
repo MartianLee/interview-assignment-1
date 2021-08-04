@@ -8,6 +8,7 @@ import styled, { css } from "styled-components";
 import ViewToggleButton from "../atoms/ViewToggleButton";
 import TodayButton from "../atoms/TodayButton";
 import NextButton from "../atoms/NextButton";
+import CalenderHeaderText from "../atoms/CalenderHeaderText";
 
 const Button = styled.button`
   font-size: 3rem;
@@ -16,12 +17,13 @@ const Button = styled.button`
 
 const CalenderHeader = () => {
   const [currentDate, setCurrentDate] = useRecoilState(currentDateState);
+  const [currentView, setCurrentView] = useRecoilState(currentViewState);
   console.log(currentDate);
   return (
     <>
       <TodayButton />
       <NextButton direction="left" />
-      {currentDate.toLocaleString()}
+      <CalenderHeaderText />
       <NextButton direction="right" />
       <ViewToggleButton />
     </>

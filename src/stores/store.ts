@@ -75,12 +75,19 @@ export const calenderValue = selector({
       }
     } else {
       // currentDate가 속한 이번 주
-      firstDay = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
-      lastDay = new Date(
-        currentDate.getFullYear(),
-        currentDate.getMonth() + 1,
-        0
+      // currentDate.getDate() - currentDate.getDay()
+      firstDay = new Date(
+        new Date(currentDate).setDate(
+          currentDate.getDate() - currentDate.getDay()
+        )
       );
+      firstDay.setHours(0, 0, 0);
+      lastDay = new Date(
+        new Date(currentDate).setDate(
+          currentDate.getDate() + (6 - currentDate.getDay())
+        )
+      );
+      lastDay.setHours(23, 59, 59);
       console.log(firstDay, lastDay);
     }
     const itDate = new Date(firstDay);
