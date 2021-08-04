@@ -11,6 +11,23 @@ import { v4 } from "uuid";
 import styled from "styled-components";
 import { formatDate } from "../../services/utils";
 import DayCalneder from "../atoms/DayCalender";
+import { CalenderTable } from "../templates/CalenderTable";
+
+interface HeaderType {
+  weekday: number;
+}
+
+const DayHeaderTd = styled.td<HeaderType>`
+  height: 2rem;
+  border-right: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+  vertical-align: top;
+  &:last-child {
+    border-right: 0;
+  }
+  color: ${(props) =>
+    props.weekday == 0 ? "red" : props.weekday == 6 ? "blue" : "grey"};
+`;
 
 const MonthlyCalender = () => {
   const [currentView, setCurrentView] = useRecoilState(currentViewState);
@@ -20,18 +37,6 @@ const MonthlyCalender = () => {
   );
 
   const calender = useRecoilValue(calenderValue);
-  const toggleView = (viewValue: ViewStateType) => {
-    setCurrentView(viewValue);
-  };
-
-  const updateToggleSchedule = (inputDate: Date) => {
-    const newSchedule: Schedule = {
-      startDate: formatDate(inputDate),
-      endDate: "",
-    };
-    setToggleScheduleInput(true);
-    setScheduleInput(newSchedule);
-  };
 
   const WeekCalender = (week: Date[]) => {
     return (
@@ -53,20 +58,20 @@ const MonthlyCalender = () => {
 
   return (
     <>
-      <table>
+      <CalenderTable>
         <thead>
           <tr>
-            <td>Sunday</td>
-            <td>Monday</td>
-            <td>Tuesday</td>
-            <td>Wednesday</td>
-            <td>Thursday</td>
-            <td>Friday</td>
-            <td>Saturday</td>
+            <DayHeaderTd weekday={0}>Sunday</DayHeaderTd>
+            <DayHeaderTd weekday={1}>Monday</DayHeaderTd>
+            <DayHeaderTd weekday={2}>Tuesday</DayHeaderTd>
+            <DayHeaderTd weekday={3}>Wednesday</DayHeaderTd>
+            <DayHeaderTd weekday={4}>Thursday</DayHeaderTd>
+            <DayHeaderTd weekday={5}>Friday</DayHeaderTd>
+            <DayHeaderTd weekday={6}>Saturday</DayHeaderTd>
           </tr>
         </thead>
         <tbody>{viewCalender}</tbody>
-      </table>
+      </CalenderTable>
     </>
   );
 };

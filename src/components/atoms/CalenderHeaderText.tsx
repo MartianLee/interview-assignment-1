@@ -22,8 +22,8 @@ const CalenderHeaderText = () => {
     <>
       <Text>
         {currentView === "monthly"
-          ? `${currentDate.getFullYear()}년 ${currentDate.getMonth()}월`
-          : `${currentDate.getFullYear()}년 ${currentDate.getMonth()}월`}
+          ? `${currentDate.getFullYear()}년 ${currentDate.getMonth() + 1}월`
+          : `${currentDate.getFullYear()}년 ${currentDate.getMonth() + 1}월`}
       </Text>
     </>
   );

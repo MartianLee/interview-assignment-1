@@ -42,3 +42,11 @@ export function getRandomColor(): string {
   }
   return color;
 }
+
+export const isToday = (day: Date) => {
+  return (
+    day.getFullYear() === new Date().getFullYear() &&
+    day.getMonth() === new Date().getMonth() &&
+    day.getDate() === new Date().getDate()
+  );
+};

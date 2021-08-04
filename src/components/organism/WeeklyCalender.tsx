@@ -1,6 +1,7 @@
 import { useRecoilState, useRecoilValue } from "recoil";
 import {
   calenderValue,
+  currentDateState,
   currentViewState,
   Schedule,
   scheduleInputState,
@@ -10,8 +11,16 @@ import {
 } from "../../stores/store";
 import { v4 } from "uuid";
 import styled from "styled-components";
-import { formatDate, timeOptions, TimeType } from "../../services/utils";
+import {
+  formatDate,
+  isToday,
+  timeOptions,
+  TimeType,
+} from "../../services/utils";
 import DayCalneder from "../atoms/DayCalender";
+import { CalenderTable } from "../templates/CalenderTable";
+import { Today } from "../atoms/Today";
+import { NormalDay } from "../atoms/NormalDay";
 
 type ScheduleElementType = {
   day?: number;
@@ -23,14 +32,8 @@ type ScheduleElementType = {
 type DatyTdType = {
   isThirties?: boolean;
   isLast?: boolean;
+  weekday?: number;
 };
-
-const CalenderTable = styled.table`
-  table-layout: fixed;
-  width: 100%;
-  padding: 30px;
-  border-spacing: 0;
-`;
 
 const DayTd = styled.td<DatyTdType>`
   height: 36px;
@@ -41,6 +44,8 @@ const DayTd = styled.td<DatyTdType>`
   &:last-child {
     border-right: 0;
   }
+  color: ${(props) =>
+    props.weekday == 0 ? "red" : props.weekday == 6 ? "blue" : "grey"};
 `;
 
 const ScheduleElement = styled.div<ScheduleElementType>`
@@ -60,7 +65,7 @@ const ScheduleWrapper = styled.div`
 `;
 
 const WeeklyCalender = () => {
-  const [currentView, setCurrentView] = useRecoilState(currentViewState);
+  const [currentDate, setCurrentDate] = useRecoilState(currentDateState);
   const [scheduleInput, setScheduleInput] = useRecoilState(scheduleInputState);
   const [toggleScheduleInput, setToggleScheduleInput] = useRecoilState(
     toggleScheduleInputState
@@ -167,45 +172,44 @@ const WeeklyCalender = () => {
     });
     return elementList;
   };
+  console.log(calender);
+  const days = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ];
+  const headTd = calender.map((weekday) => {
+    console.log(weekday);
+    return (
+      <DayTd key={v4()} weekday={weekday.getDay()}>
+        <div>{days[weekday.getDay()]}</div>
+        {isToday(weekday) ? (
+          <Today alignText="center">{weekday.getDate()}</Today>
+        ) : (
+          <NormalDay
+            thisMonth={weekday.getMonth() === currentDate.getMonth()}
+            alignText="center"
+          >
+            {weekday.getDate()}
+          </NormalDay>
+        )}
+      </DayTd>
+    );
+  });
 
   return (
     <>
       <ScheduleWrapper>{ScheduleElmentList()}</ScheduleWrapper>
-      {/* <CalenderPresetation>
-        
-      </CalenderPresetation> */}
+
       <CalenderTable>
         <thead>
           <tr>
             <DayTd></DayTd>
-            <DayTd>
-              Sunday <br />
-              {calender[0].getDate()}
-            </DayTd>
-            <DayTd>
-              Monday <br />
-              {calender[1].getDate()}
-            </DayTd>
-            <DayTd>
-              Tuesday <br />
-              {calender[2].getDate()}
-            </DayTd>
-            <DayTd>
-              Wednesday <br />
-              {calender[3].getDate()}
-            </DayTd>
-            <DayTd>
-              Thursday <br />
-              {calender[4].getDate()}
-            </DayTd>
-            <DayTd>
-              Friday <br />
-              {calender[5].getDate()}
-            </DayTd>
-            <DayTd>
-              Saturday <br />
-              {calender[6].getDate()}
-            </DayTd>
+            {headTd}
           </tr>
         </thead>
         <tbody>{viewCalender}</tbody>
