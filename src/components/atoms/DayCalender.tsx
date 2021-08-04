@@ -44,21 +44,28 @@ const DayCalneder = (props: { day: Date }) => {
 
   const updateToggleSchedule = (inputDate: Date) => {
     const newSchedule: Schedule = {
+      title: "",
       startDate: formatDate(inputDate),
       endDate: "",
       startTime: 0,
       endTime: 0,
     };
-    setToggleScheduleInput(true);
+    setToggleScheduleInput({
+      toggle: true,
+      isModify: false,
+    });
     setScheduleInput(newSchedule);
   };
 
+  const updateSchedule = (schedule: Schedule) => {
+    setToggleScheduleInput({
+      toggle: true,
+      isModify: true,
+    });
+    setScheduleInput(schedule);
+  };
+
   const todaySchedule = scheduleList.filter((item) => {
-    console.log(
-      new Date(item.startDate),
-      props.day,
-      new Date(`${item.endDate} 23:59:59`)
-    );
     if (
       new Date(`${item.startDate} 00:00:00`) <= props.day &&
       props.day <= new Date(`${item.endDate} 23:59:59`)
@@ -73,6 +80,7 @@ const DayCalneder = (props: { day: Date }) => {
       <DaySchedule
         key={`${props.day.toLocaleString}-${index}`}
         color={item.color}
+        onClick={() => updateSchedule(item)}
       >
         {item.title}
       </DaySchedule>

@@ -22,7 +22,6 @@ const CenterElement = styled.div`
 const CalenderHeader = () => {
   const [currentDate, setCurrentDate] = useRecoilState(currentDateState);
   const [currentView, setCurrentView] = useRecoilState(currentViewState);
-  console.log(currentDate);
   return (
     <>
       <HeaderElement>

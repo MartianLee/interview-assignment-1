@@ -4,11 +4,16 @@ export type ViewStateType = "monthly" | "weekly";
 export interface Schedule {
   id?: string;
   color?: string;
-  title?: string;
+  title: string;
   startDate: string;
   startTime: number;
   endDate: string;
   endTime: number;
+}
+
+export interface ToggleType {
+  toggle: boolean;
+  isModify?: boolean;
 }
 
 export const currentViewState = atom({
@@ -23,7 +28,10 @@ export const currentDateState = atom({
 
 export const toggleScheduleInputState = atom({
   key: "toggleScheduleInput",
-  default: false,
+  default: {
+    toggle: false,
+    isModify: false,
+  } as ToggleType,
 });
 
 export const scheduleInputState = atom({

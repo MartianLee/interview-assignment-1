@@ -9,7 +9,7 @@ import {
   ViewStateType,
 } from "../../stores/store";
 import styled, { css } from "styled-components";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { v4 } from "uuid";
 import { getRandomColor, timeOptions } from "../../services/utils";
 
@@ -25,6 +25,7 @@ const ModalWrapper = styled.div`
   background-color: rgba(0, 0, 0, 0.3);
   width: 100%;
   height: 100%;
+  top: 0;
 `;
 
 const Modal = styled.div`
@@ -33,6 +34,7 @@ const Modal = styled.div`
   position: relative;
   padding: 20px;
   border-radius: 10px;
+  z-index: 100;
 `;
 
 const InputHeader = styled.div`
@@ -69,14 +71,17 @@ const InputScheduleModal = () => {
   const [toggleScheduleInput, setToggleScheduleInput] = useRecoilState(
     toggleScheduleInputState
   );
-  const updateCurrentDate = () => {
-    setScheduleInput({
-      startDate: "",
-      endDate: "",
-      startTime: 0,
-      endTime: 0,
-    });
-  };
+
+  useEffect(() => {
+    console.log(toggleScheduleInput, scheduleInput);
+    if (toggleScheduleInput.isModify) {
+      setTitle(scheduleInput.title);
+      setStartDate(scheduleInput.startDate);
+      setStartTime(scheduleInput.startTime);
+      setEndDate(scheduleInput.endDate);
+      setEndTime(scheduleInput.endTime);
+    }
+  }, []);
 
   const insertSchedule = () => {
     console.log(title, startDate, startTime, endDate, endTime);
@@ -84,17 +89,54 @@ const InputScheduleModal = () => {
       alert("일정 제목을 입력해 주세요!");
       return;
     }
-    const newSchedule: Schedule = {
-      id: v4(),
-      color: getRandomColor(),
-      title,
-      startDate,
-      startTime,
-      endDate,
-      endTime,
-    };
-    setScheduleList([...scheduleList, newSchedule]);
-    setToggleScheduleInput(false);
+    if (toggleScheduleInput.isModify) {
+      scheduleList.forEach((item) => {
+        if (item.id == scheduleInput.id) {
+          item = {
+            title,
+            startDate,
+            startTime,
+            endDate,
+            endTime,
+          };
+        }
+        setScheduleList([...scheduleList]);
+      });
+    } else {
+      const newSchedule: Schedule = {
+        id: v4(),
+        color: getRandomColor(),
+        title,
+        startDate,
+        startTime,
+        endDate,
+        endTime,
+      };
+      setScheduleList([...scheduleList, newSchedule]);
+    }
+    setToggleScheduleInput({
+      toggle: false,
+      isModify: false,
+    });
+  };
+
+  const deleteSchedule = () => {
+    const result = confirm("해당 일정을 삭제하시겠습니까?");
+    if (result) {
+      const currentIndex = scheduleList.findIndex(
+        (el) => el.id === scheduleInput.id
+      );
+      console.log(currentIndex);
+      console.log(scheduleList);
+      setScheduleList([
+        ...scheduleList.slice(0, currentIndex),
+        ...scheduleList.slice(currentIndex + 1),
+      ]);
+      setToggleScheduleInput({
+        toggle: false,
+        isModify: false,
+      });
+    }
   };
 
   const OptionListComponent = timeOptions().map((item: any, index) => {
@@ -108,10 +150,15 @@ const InputScheduleModal = () => {
     <>
       <ModalWrapper>
         <Modal>
-          <InputHeader>일정 수정하기</InputHeader>
+          <InputHeader>
+            {toggleScheduleInput.isModify ? "일정 수정하기" : "일정 만들기"}
+          </InputHeader>
           <CloseButton
             onClick={() => {
-              setToggleScheduleInput(false);
+              setToggleScheduleInput({
+                toggle: false,
+                isModify: false,
+              });
             }}
           >
             X
@@ -120,6 +167,7 @@ const InputScheduleModal = () => {
             일정 제목을 입력하세요
             <input
               type="text"
+              value={title}
               onChange={(e) => setTitle(e.target.value)}
             ></input>
           </InputRow>
@@ -127,12 +175,14 @@ const InputScheduleModal = () => {
             시작 날짜
             <input
               type="date"
+              value={startDate}
               onChange={(e) => setStartDate(e.target.value)}
             ></input>
             시작 시간
             <select
               name="startTime"
               id="startTime"
+              value={startTime}
               onChange={(e) => setStartTime(parseInt(e.target.value))}
             >
               {OptionListComponent}
@@ -143,18 +193,36 @@ const InputScheduleModal = () => {
             <input
               name="endDate"
               type="date"
+              value={endDate}
               onChange={(e) => setEndDate(e.target.value)}
             ></input>
             종료 시간
             <select
               name="endTime"
               id="endTime"
+              value={endTime}
               onChange={(e) => setEndTime(parseInt(e.target.value))}
             >
               {OptionListComponent}
             </select>
           </InputRow>
-          <FunctionButton>취소</FunctionButton>
+          <FunctionButton
+            onClick={() =>
+              setToggleScheduleInput({
+                toggle: false,
+                isModify: false,
+              })
+            }
+          >
+            취소
+          </FunctionButton>
+          {toggleScheduleInput.isModify ? (
+            <FunctionButton onClick={() => deleteSchedule()}>
+              삭제
+            </FunctionButton>
+          ) : (
+            ""
+          )}
           <FunctionButton onClick={() => insertSchedule()} type="submit">
             저장
           </FunctionButton>

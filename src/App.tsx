@@ -12,21 +12,22 @@ function App() {
   const [toggleScheduleInput, setToggleScheduleInput] = useRecoilState(
     toggleScheduleInputState
   );
-  console.log(currentView);
 
   return (
     <div className="App">
-      {toggleScheduleInput ? <InputScheduleModal /> : null}
-      {currentView === "monthly" ? (
-        <MonthlyCalenderPage></MonthlyCalenderPage>
-      ) : (
-        ""
-      )}
-      {currentView === "weekly" ? (
-        <WeeklyCalaenderPage></WeeklyCalaenderPage>
-      ) : (
-        ""
-      )}
+      {toggleScheduleInput.toggle ? <InputScheduleModal /> : null}
+      <div className="Contents">
+        {currentView === "monthly" ? (
+          <MonthlyCalenderPage></MonthlyCalenderPage>
+        ) : (
+          ""
+        )}
+        {currentView === "weekly" ? (
+          <WeeklyCalaenderPage></WeeklyCalaenderPage>
+        ) : (
+          ""
+        )}
+      </div>
     </div>
   );
 }

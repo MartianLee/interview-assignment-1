@@ -51,7 +51,7 @@ const DayTd = styled.td<DatyTdType>`
 const ScheduleElement = styled.div<ScheduleElementType>`
   position: absolute;
   left: calc(30px + calc(calc(100% - 60px) / 8 * ${(props) => props.day}));
-  top: calc(28px + calc(calc(36px + 3px) * ${(props) => props.time}));
+  top: calc(48px + calc(calc(36px + 3px) * ${(props) => props.time}));
   width: calc(calc(100% - 60px) / 8 - 16px);
   height: calc(calc(36px + 3px) * ${(props) => props.length} - 16px);
   margin: 8px;
@@ -73,17 +73,24 @@ const WeeklyCalender = () => {
 
   const updateToggleSchedule = (inputDate: Date) => {
     const newSchedule: Schedule = {
+      title: "",
       startDate: formatDate(inputDate),
       endDate: "",
       startTime: 0,
       endTime: 0,
     };
-    setToggleScheduleInput(true);
     setScheduleInput(newSchedule);
+    setToggleScheduleInput({
+      toggle: true,
+      isModify: false,
+    });
   };
 
   const updateSchedule = (schedule: Schedule) => {
-    setToggleScheduleInput(true);
+    setToggleScheduleInput({
+      toggle: true,
+      isModify: true,
+    });
     setScheduleInput(schedule);
   };
 
@@ -129,8 +136,10 @@ const WeeklyCalender = () => {
     const timeOptionList = timeOptions();
     scheduleList.forEach((schedule) => {
       if (
-        calender[0] <= new Date(schedule.startDate) &&
-        new Date(schedule.startDate) <= calender[6]
+        (calender[0] <= new Date(schedule.startDate) &&
+          new Date(schedule.startDate) <= calender[6]) ||
+        (calender[0] <= new Date(schedule.endDate) &&
+          new Date(schedule.startDate) <= calender[6])
       ) {
         console.log(schedule);
         for (
@@ -138,6 +147,7 @@ const WeeklyCalender = () => {
           iter <= new Date(schedule.endDate);
           iter.setDate(iter.getDate() + 1)
         ) {
+          if (iter <= calender[0]) continue;
           let time;
           if (iter.getDate() == new Date(schedule.startDate).getDate()) {
             time = schedule.startTime;
@@ -158,7 +168,7 @@ const WeeklyCalender = () => {
               time={time + 1}
               length={length}
               color={schedule.color}
-              onClick={() => () => updateToggleSchedule(iter)}
+              onClick={() => updateSchedule(schedule)}
             >
               <div>
                 {timeOptionList[schedule.startTime].text}-

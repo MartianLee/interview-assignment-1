@@ -20,9 +20,7 @@ const NextButton = (props: NextButtonProps) => {
   const [currentDate, setCurrentDate] = useRecoilState(currentDateState);
   const [currentView] = useRecoilState(currentViewState);
 
-  console.log(currentDate);
   const updateCurrentDate = () => {
-    console.log(currentDate);
     let addDirection = 1;
     if (props.direction == "left") {
       addDirection = -1;
