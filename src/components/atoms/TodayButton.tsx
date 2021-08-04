@@ -7,7 +7,9 @@ import {
 import styled, { css } from "styled-components";
 
 const Button = styled.button`
-  font-size: 2rem;
+  border-radius: 40px;
+  width: 4em;
+  height: 2em;
 `;
 
 const TodayButton = () => {

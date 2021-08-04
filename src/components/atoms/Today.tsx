@@ -11,5 +11,5 @@ export const Today = styled.div<TodayType>`
   color: white;
   padding: 4px;
   width: 1.1em;
-  margin: ${(props) => (props.alignText == "center" ? "6px auto" : "10px")};
+  margin: ${(props) => (props.alignText == "center" ? "6px auto" : "0 0 10px")};
 `;

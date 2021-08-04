@@ -12,6 +12,9 @@ interface NextButtonProps {
 
 const Text = styled.span`
   font-size: 2rem;
+  font-weight: 500;
+  margin-left: 30px;
+  margin-right: 30px;
 `;
 
 const CalenderHeaderText = () => {

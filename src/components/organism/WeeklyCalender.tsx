@@ -156,7 +156,7 @@ const WeeklyCalender = () => {
               key={v4()}
               day={new Date(schedule.startDate).getDay() + 1}
               time={time + 1}
-              length={length + 1}
+              length={length}
               color={schedule.color}
               onClick={() => () => updateToggleSchedule(iter)}
             >

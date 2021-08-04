@@ -10,9 +10,10 @@ interface NextButtonProps {
   direction: string;
 }
 
-const Button = styled.button`
+const Button = styled.span`
   font-size: 2rem;
   color: grey;
+  cursor: pointer;
 `;
 
 const NextButton = (props: NextButtonProps) => {

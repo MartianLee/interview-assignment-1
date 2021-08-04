@@ -10,9 +10,13 @@ import TodayButton from "../atoms/TodayButton";
 import NextButton from "../atoms/NextButton";
 import CalenderHeaderText from "../atoms/CalenderHeaderText";
 
-const Button = styled.button`
-  font-size: 3rem;
-  font-weight: 500;
+const HeaderElement = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const CenterElement = styled.div`
+  flex: 1;
 `;
 
 const CalenderHeader = () => {
@@ -21,11 +25,15 @@ const CalenderHeader = () => {
   console.log(currentDate);
   return (
     <>
-      <TodayButton />
-      <NextButton direction="left" />
-      <CalenderHeaderText />
-      <NextButton direction="right" />
-      <ViewToggleButton />
+      <HeaderElement>
+        <TodayButton />
+        <CenterElement>
+          <NextButton direction="left" />
+          <CalenderHeaderText />
+          <NextButton direction="right" />
+        </CenterElement>
+        <ViewToggleButton />
+      </HeaderElement>
     </>
   );
 };

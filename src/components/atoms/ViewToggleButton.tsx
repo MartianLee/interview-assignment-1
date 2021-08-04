@@ -3,14 +3,16 @@ import { currentViewState, ViewStateType } from "../../stores/store";
 import styled, { css } from "styled-components";
 
 const Selected = styled.button`
-  font-size: 3rem;
+  font-size: 1rem;
   font-weight: 500;
   color: white;
   background: black;
+  width: 3em;
 `;
 const UnSelected = styled.button`
-  font-size: 3rem;
+  font-size: 1rem;
   font-weight: 500;
+  width: 3em;
 `;
 
 const ViewToggleButton = () => {

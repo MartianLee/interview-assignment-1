@@ -19,12 +19,19 @@ const DayTd = styled.td`
   &:last-child {
     border-right: 0;
   }
+  padding: 10px;
 `;
 
 const DaySchedule = styled.div`
+  font-size: 13px;
   background: ${(props) => props.color};
   height: 1rem;
   color: white;
+  border-radius: 4px;
+  padding: 2px;
+  margin-bottom: 4px;
+  text-align: left;
+  padding-left: 6px;
 `;
 
 const DayCalneder = (props: { day: Date }) => {
